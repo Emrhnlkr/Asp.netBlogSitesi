@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MvcBlog.Models.Makale>
+
+@{
+    ViewBag.Title = "BlogAra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-8">
+    <h2>Aradığınız İçerikdeki Makaleler</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Kategori.KategoriAd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uye.KullaniciAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Baslik)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Okunma)
+            </th>
+            
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kategori.KategoriAd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Uye.KullaniciAdi)
+                </td>
+                <td>
+                 <a href="/Home/MakaleDetay/@item.">@Html.DisplayFor(modelItem => item.Baslik)</a>  
+                </td>
+               
+                <td>
+                  <img class="img-rounded img-responsive" width="75"  src="@item.Foto" alt="@item.Baslik"  />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tarih)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Okunma)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>

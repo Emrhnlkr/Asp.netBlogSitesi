@@ -1,0 +1,135 @@
+﻿@model MvcBlog.Models.Makale
+ @using Microsoft.Web.Helpers;
+@{
+    ViewBag.Title = "MakaleDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .tag {
+        background-color: cornsilk;
+    }
+</style>
+<div class="col-md-8">
+    <nav class="navbar navbar-default" role="navigation">
+        <h1>&nbsp;&nbsp;@Model.Baslik</h1>
+        <!-- Author -->
+        @*<p class="lead">
+            <img class="img-circle " width="65" src="@Model.Uye.Foto" alt="@Model.Uye.AdSoyad" /> <a href="/Uye/UyeProfil/@Model.UyeId">@Model.Uye.AdSoyad</a>
+
+        </p>*@  <!-- Date/Time -->
+        <p>&nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span>@String.Format("{0: MMMM yyyy}", Model.Tarih) | <span class="glyphicon glyphicon-edit"></span>@Model.Kategori.KategoriAd (@Model.Kategori.Makales.Count()) </p> @*count ile hangi kategoride olduğunu çekiyor...<span class="glyphicon glyphicon-send"></span>@Model.Yorums.Count()*@
+        <hr>
+        <!-- Preview Image -->
+        <img class="img-responsive center-block" width="500" src="@Model.Foto" alt="@Model.Baslik">
+        <hr>
+        <!-- Post Content -->
+        <p class="lead">
+
+            <h4> &nbsp;@Html.Raw(Model.Icerik)</h4>
+        </p>
+    </nav>
+    <div class="well">
+        <i> <h4 class="text-danger">Etiketler</h4> </i>  @*FARKLI BİR STİL İLE ETİKET YAZISINI BELLİ ET!!!!*@
+        @foreach (var item in Model.Etikets)
+    {
+        <span class="tag">@item.EtiketAd -</span>
+}
+    </div>
+    @*<hr>*@
+    @*@if (Session["uyeid"] != null)
+        { <div class="well">
+            <h4>Yorum Yap</h4>
+            <form role="form">
+                <div class="form-group">
+                    <textarea id="yorum" typeof="text" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" id="gonder" class="btn btn-primary">Yorum Yap</button>
+
+            </form>
+        </div>
+        }*@
+    @*else
+        {
+            <h2>Makale yorum yapmak için kullanıcı girişi yapmalısınız</h2>
+            <p><a href="/Uye/Login/">Giriş yapınız</a></p>
+        }*@
+
+    @*<div class="media">
+        @foreach (var item in Model.Yorums.ToList())
+        {
+            <div class="well">
+                <a class="pull-left" href="#">
+                    <img width="50" class="img-circle" src="@item.Uye.Foto" alt="@item.Uye.AdSoyad" />
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        @item.Uye.KullaniciAdi
+                        @*<small>@item.Tarih</small>*@
+    @*</h4>*@
+    @*@item.Icerik -
+                        @if (Convert.ToInt32(Session["uyeid"]) == item.UyeId)
+                    {
+                            <a class="btn btn-danger" href="/Home/YorumSil/@item.YorumId">Sil</a>
+
+                        }
+
+                    </div>
+                </div>
+
+            }
+
+
+        </div>*@
+    @*FACEBOOK PAYLAŞIM ETİKETİ*@
+    @*<form role="form" method="post">
+            <div class="well">
+
+
+                @Facebook.LikeButton("https://www.facebook.com/emirhan.ulker.39/")
+                @LinkShare.GetHtml("Blok Makale", linkSites: new[] { LinkShareSite.Facebook })
+
+
+                <a class="social facebook" href="https://facebook.com/sharer.php?u=https://mvc.blog.some.com/Home/MakaleDetay/@Model.MakaleId" target="_blank"></a>
+
+            </div>
+        </form>*@
+
+</div>
+
+<script src="~/Content/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="~/Content/js/bootstrap.min.js"></script>
+@*<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $("#gonder").click(function (){
+        var yorumunuz = $("#yorum").val();
+            $.ajax({
+
+                url: '/Home/YorumYap/',
+                data: { yorum=yorumunuz, Makaleid=@Model.MakaleId},
+                type:'POST',
+                dataType: 'json',
+                success: function (data) {
+                    alert("Yorum gönderildi"+yorumunuz);}
+
+
+            });
+            });
+    })*@
+
+<script type="text/javascript">
+            $(document).ready(function () {
+                $.ajax({
+                    url: '/Home/OkunmaArttir/',
+                    data: { Makaleid=@Model.MakaleId},
+                    type: 'POST',
+                });
+            })
+
+
+</script>
+
+
